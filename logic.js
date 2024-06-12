@@ -36,7 +36,7 @@ function createElements(value)
  //  Elements to be added 
  let taskElement = document.createElement("div");
  let titleElement = document.createElement("h4");
- let dateElement = document.createElement("h6");
+ let dateElement = document.createElement("h5");
  let timeElement = document.createElement("h6");
  let updateButtonElement = document.createElement("button");
  let deleteButtonElement = document.createElement("button");
@@ -94,17 +94,79 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
      deleteButtonElement.textContent = "Delete";
      updateButtonElement.textContent = "Update";
 
-     let tobeRemovedValue = JSON.stringify(value);
+     let targetValue = JSON.stringify(value);
      let allKeys = Object.keys(localStorage);
 
 
      allKeys.forEach(key =>{
 
-        if(localStorage.getItem(key) === tobeRemovedValue)
+        if(localStorage.getItem(key) === targetValue)
         {
             deleteButtonElement.onclick = function() {
               localStorage.removeItem(key);
               taskElement.remove();
+           };
+        }
+     })
+
+
+     allKeys.forEach(key =>{
+
+        if(localStorage.getItem(key) === targetValue)
+        {
+            updateButtonElement.onclick = function() {
+
+                let newHeading = prompt("Enter new title for the task:", value.Title);
+                if (newHeading !== null) 
+                {
+                    let headingElement = taskElement.querySelector("h4");
+                    if (headingElement) 
+                    {
+                        headingElement.textContent = newHeading;
+
+                           let storedObject = JSON.parse(localStorage.getItem(key));
+                           storedObject.Title = newHeading;
+                           let updatedObj = JSON.stringify(storedObject);
+                           localStorage.setItem(key ,updatedObj)
+                        
+                    }
+                }
+
+
+                let newDate = prompt("Enter new date for the task:", value.Date);
+                if (newDate !== null) 
+                {
+                    let dateElement = taskElement.querySelector("h5");
+                    if (dateElement) 
+                    {
+                        dateElement.textContent = newDate;
+
+                       
+                               let storedObject = JSON.parse(localStorage.getItem(key));
+                               storedObject.Date = newDate;
+                               let updatedObj = JSON.stringify(storedObject);
+                               localStorage.setItem(key ,updatedObj)
+                        
+                    }
+                }
+
+
+                let newTime = prompt("Enter new date for the task:", value.Time);
+                if (newTime !== null) 
+                {
+                    let timeElement = taskElement.querySelector("h6");
+                    if (timeElement) 
+                    {
+                        timeElement.textContent = newTime;
+
+                       
+                               let storedObject = JSON.parse(localStorage.getItem(key));
+                               storedObject.Time = newTime;
+                               let updatedObj = JSON.stringify(storedObject);
+                               localStorage.setItem(key ,updatedObj)
+                            
+                    }
+                }
            };
         }
      })
