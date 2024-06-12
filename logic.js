@@ -1,3 +1,10 @@
+let taskCount = 0;
+
+
+function viewTasks()
+{
+  
+}
 
 function toggleView(e)
 {
@@ -20,16 +27,64 @@ function toggleView(e)
        viewTasksButton.style.backgroundColor = "white";
        allTasksDiv.style.display = "block";
        form.style.display = "none";
+       viewTasks();
     }
 }
 
 function addTask()
 {
+    
+
     let title = document.querySelector("#input1").value;
     let date = document.querySelector("#input2").value;
     let time = document.querySelector("#input3").value;
 
-    localStorage.setItem("title" , title);
-    localStorage.setItem("date" , date);
-    localStorage.setItem("time" , time);
+    let task = {
+        Title : title,
+        Date  : date,
+        Time  : time
+    }
+
+    let taskObj = JSON.stringify(task);
+
+    const keys = Object.keys(localStorage);
+    let highestKeyNumber = validateKeys(keys);
+
+    if(highestKeyNumber != 0)
+    {
+        highestKeyNumber++
+        taskCount = highestKeyNumber;
+    }
+    else
+    {
+        taskCount++;
+    }
+    
+    localStorage.setItem("task" + taskCount , taskObj);
+}
+
+function validateKeys(keys)
+{
+    const taskKeys = keys.filter(key => key.startsWith("task"));
+
+    let highestKeyNumber = findHighestTaskKey(taskKeys);
+   
+    return highestKeyNumber;
+}
+
+function findHighestTaskKey(taskKeys) 
+{
+    let highestKeyNumber = 0;
+
+    taskKeys.forEach(key => {
+
+        const keyNumber = parseInt(key.replace("task", ""));
+
+            if (keyNumber > highestKeyNumber) 
+            {
+                highestKeyNumber = keyNumber;
+            }
+    });
+
+    return highestKeyNumber;
 }
