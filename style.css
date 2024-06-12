@@ -42,7 +42,7 @@ html,body
 
 #all-tasks
 {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -50,7 +50,6 @@ html,body
     width: 60%;
     background-color: #D5FF98;
     border-radius: 10px;
-    display: flex;
 }
 
 #add-task
@@ -65,7 +64,7 @@ img
 
 form
 {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;

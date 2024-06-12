@@ -23,60 +23,101 @@ if(!hasDisplayed)
    let allValues = Object.values(allTasks);
 
    allValues.forEach(value =>{
-    
-    //  Elements to be added 
-    let taskElement = document.createElement("div");
-    let titleElement = document.createElement("h4");
-    let dateElement = document.createElement("h6");
-    let timeElement = document.createElement("h6");
-    let updateButtonElement = document.createElement("button");
-    let deleteButtonElement = document.createElement("button");
-    let checkBox = document.createElement("input");
-    checkBox.type = 'checkbox';
+    createElements(value);
+   })
+}
+  
+hasDisplayed = true;
 
+}
+
+function createElements(value)
+{
+ //  Elements to be added 
+ let taskElement = document.createElement("div");
+ let titleElement = document.createElement("h4");
+ let dateElement = document.createElement("h6");
+ let timeElement = document.createElement("h6");
+ let updateButtonElement = document.createElement("button");
+ let deleteButtonElement = document.createElement("button");
+ let checkBox = document.createElement("input");
+ checkBox.type = 'checkbox';
+
+ styleElements(updateButtonElement,deleteButtonElement,checkBox,taskElement);
+ addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value);
+ insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,checkBox);
+
+}
+
+function styleElements(updateButtonElement, deleteButtonElement, checkBox, taskElement)
+{
+ // Styling Task cards 
+ taskElement.style.display = "flex";
+ taskElement.style.alignItems = "center";
+ taskElement.style.justifyContent = "space-around";
+ taskElement.style.borderRadius = "10px";
+ taskElement.style.width = "90%";
+ taskElement.style.height = "20%";
+ taskElement.style.margin = "5%";
+ taskElement.style.backgroundColor = "white";
+
+ // Styling Buttons
+ updateButtonElement.style.width = "15%";
+ updateButtonElement.style.height = "40%";
+ updateButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
+ updateButtonElement.style.border = "none";
+ updateButtonElement.style.borderRadius = "10px";
+ updateButtonElement.style.color = "white";
+ updateButtonElement.style.cursor = "pointer";
+
+
+ deleteButtonElement.style.width = "15%";
+ deleteButtonElement.style.height = "40%";
+ deleteButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
+ deleteButtonElement.style.border = "none";
+ deleteButtonElement.style.borderRadius = "10px";
+ deleteButtonElement.style.color = "white";
+ deleteButtonElement.style.cursor = "pointer";
+
+ 
+ // Styling Check Box
+ checkBox.style.width = "15%";
+ checkBox.style.height = "40%";
+
+}
+
+function addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value)
+{
+     titleElement.textContent = value.Title;
+     dateElement.textContent = value.Date;
+     timeElement.textContent = value.Time;
+     deleteButtonElement.textContent = "Delete";
+     updateButtonElement.textContent = "Update";
+
+     let tobeRemovedValue = JSON.stringify(value);
+     let allKeys = Object.keys(localStorage);
+
+
+     allKeys.forEach(key =>{
+
+        if(localStorage.getItem(key) === tobeRemovedValue)
+        {
+            deleteButtonElement.onclick = function() {
+              localStorage.removeItem(key);
+              taskElement.remove();
+           };
+        }
+     })
+
+
+    
+}
+
+function insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,checkBox)
+{
     let parentElement = document.getElementById('all-tasks');
     parentElement.style.overflowY = "scroll";
     parentElement.appendChild(taskElement);
-
-    // Styling Task cards 
-    taskElement.style.display = "flex";
-    taskElement.style.alignItems = "center";
-    taskElement.style.justifyContent = "space-around";
-    taskElement.style.borderRadius = "10px";
-    taskElement.style.width = "90%";
-    taskElement.style.height = "20%";
-    taskElement.style.margin = "5%";
-    taskElement.style.backgroundColor = "white";
-
-    // Styling Buttons
-    updateButtonElement.style.width = "15%";
-    updateButtonElement.style.height = "40%";
-    updateButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
-    updateButtonElement.style.border = "none";
-    updateButtonElement.style.borderRadius = "10px";
-    updateButtonElement.style.color = "white";
-    updateButtonElement.style.cursor = "pointer";
-
-
-    deleteButtonElement.style.width = "15%";
-    deleteButtonElement.style.height = "40%";
-    deleteButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
-    deleteButtonElement.style.border = "none";
-    deleteButtonElement.style.borderRadius = "10px";
-    deleteButtonElement.style.color = "white";
-    deleteButtonElement.style.cursor = "pointer";
-
-    
-    // Styling Check Box
-    checkBox.style.width = "15%";
-    checkBox.style.height = "40%";
-
-    // Adding Content in Created Elements
-    titleElement.textContent = value.Title;
-    dateElement.textContent = value.Date;
-    timeElement.textContent = value.Time;
-    deleteButtonElement.textContent = "Delete";
-    updateButtonElement.textContent = "Update";
 
     // Inserting Elements in Task Card
     taskElement.appendChild(checkBox)
@@ -85,12 +126,6 @@ if(!hasDisplayed)
     taskElement.appendChild(timeElement)
     taskElement.appendChild(updateButtonElement)
     taskElement.appendChild(deleteButtonElement)
-
-   })
-}
-  
-hasDisplayed = true;
-
 }
 
 function toggleView(e)
