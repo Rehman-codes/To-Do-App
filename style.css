@@ -40,6 +40,18 @@ html,body
     width: 100%;
 }
 
+#all-tasks
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 85%;
+    width: 60%;
+    background-color: #D5FF98;
+    border-radius: 10px;
+}
+
 img
 {
     height: 100%;
