@@ -50,6 +50,12 @@ html,body
     width: 60%;
     background-color: #D5FF98;
     border-radius: 10px;
+    display: none;
+}
+
+#add-task
+{
+    background-color: white;
 }
 
 img
@@ -90,6 +96,7 @@ input
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    background-color: #D5FF98;
 }
 
 #submit-button
