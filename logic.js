@@ -57,7 +57,7 @@ function styleElements(updateButtonElement, deleteButtonElement, statusButton, t
  taskElement.style.borderRadius = "10px";
  taskElement.style.width = "99%";
  taskElement.style.height = "20%";
- taskElement.style.margin = "5%";
+ taskElement.style.marginBottom = "5%";
  taskElement.style.backgroundColor = "white";
 
  // Styling Buttons
