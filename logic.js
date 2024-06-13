@@ -55,7 +55,7 @@ function styleElements(updateButtonElement, deleteButtonElement, statusButton, t
  taskElement.style.alignItems = "center";
  taskElement.style.justifyContent = "space-around";
  taskElement.style.borderRadius = "10px";
- taskElement.style.width = "90%";
+ taskElement.style.width = "99%";
  taskElement.style.height = "20%";
  taskElement.style.margin = "5%";
  taskElement.style.backgroundColor = "white";
