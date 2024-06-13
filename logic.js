@@ -40,16 +40,15 @@ function createElements(value)
  let timeElement = document.createElement("h6");
  let updateButtonElement = document.createElement("button");
  let deleteButtonElement = document.createElement("button");
- let checkBox = document.createElement("input");
- checkBox.type = 'checkbox';
+ let statusButton = document.createElement("button");
 
- styleElements(updateButtonElement,deleteButtonElement,checkBox,taskElement);
- addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value);
- insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,checkBox);
+ styleElements(updateButtonElement,deleteButtonElement,statusButton,taskElement);
+ addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value,statusButton);
+ insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton);
 
 }
 
-function styleElements(updateButtonElement, deleteButtonElement, checkBox, taskElement)
+function styleElements(updateButtonElement, deleteButtonElement, statusButton, taskElement)
 {
  // Styling Task cards 
  taskElement.style.display = "flex";
@@ -80,13 +79,15 @@ function styleElements(updateButtonElement, deleteButtonElement, checkBox, taskE
  deleteButtonElement.style.cursor = "pointer";
 
  
- // Styling Check Box
- checkBox.style.width = "15%";
- checkBox.style.height = "40%";
+ // Styling Status Button 
+ statusButton.style.width = "15%";
+ statusButton.style.height = "40%";
+ statusButton.style.backgroundColor = "yellow";
+
 
 }
 
-function addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value)
+function addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value,statusButton)
 {
      titleElement.textContent = value.Title;
      dateElement.textContent = value.Date;
@@ -102,6 +103,25 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
 
         if(localStorage.getItem(key) === targetValue)
         {
+            if(value.status === true)
+            {
+                statusButton.textContent = "Done";
+                statusButton.style.backgroundColor = "green";
+            }
+            else
+            {
+                statusButton.textContent = "Pending";
+                statusButton.style.backgroundColor = "yellow";
+            }
+        }
+     })
+
+
+     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     allKeys.forEach(key =>{
+
+        if(localStorage.getItem(key) === targetValue)
+        {
             deleteButtonElement.onclick = function() {
               localStorage.removeItem(key);
               taskElement.remove();
@@ -110,6 +130,35 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
      })
 
 
+     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Update Task Status >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     allKeys.forEach(key =>{
+
+        if(localStorage.getItem(key) === targetValue)
+        {
+            statusButton.onclick = function() {
+
+                if(statusButton.textContent === "Pending")
+                {
+                    statusButton.textContent = "Done";
+                    statusButton.style.backgroundColor = "green";
+                    value.status = true;
+                    let updatedWithStatus = JSON.stringify(value);
+                    localStorage.setItem(key,updatedWithStatus);
+                }
+                else
+                {
+                    statusButton.textContent = "Pending";
+                    statusButton.style.backgroundColor = "yellow";
+                    value.status = false;
+                    let updatedWithStatus = JSON.stringify(value);
+                    localStorage.setItem(key,updatedWithStatus);
+                }
+           };
+        }
+     })
+
+
+     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Update Task  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
      allKeys.forEach(key =>{
 
         if(localStorage.getItem(key) === targetValue)
@@ -175,14 +224,14 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
     
 }
 
-function insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,checkBox)
+function insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton)
 {
     let parentElement = document.getElementById('all-tasks');
     parentElement.style.overflowY = "scroll";
     parentElement.appendChild(taskElement);
 
     // Inserting Elements in Task Card
-    taskElement.appendChild(checkBox)
+    taskElement.appendChild(statusButton)
     taskElement.appendChild(titleElement)
     taskElement.appendChild(dateElement)
     taskElement.appendChild(timeElement)
