@@ -38,31 +38,43 @@ function createElements(value)
  let titleElement = document.createElement("h4");
  let dateElement = document.createElement("h5");
  let timeElement = document.createElement("h6");
+
  let updateButtonElement = document.createElement("button");
+ let updateImageElement = document.createElement("img");
+ updateImageElement.src = "edit.png";
+ updateImageElement.alt = "Edit";
+ updateButtonElement.appendChild(updateImageElement);
+
  let deleteButtonElement = document.createElement("button");
+ let deleteImageElement = document.createElement("img");
+ deleteImageElement.src = "delete.png";
+ deleteImageElement.alt = "Delete";
+ deleteButtonElement.appendChild(deleteImageElement);
+
  let statusButton = document.createElement("button");
 
- styleElements(updateButtonElement,deleteButtonElement,statusButton,taskElement);
+ styleElements(updateButtonElement,deleteButtonElement,statusButton,taskElement,deleteImageElement,updateImageElement);
  addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value,statusButton);
  insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton);
 
 }
 
-function styleElements(updateButtonElement, deleteButtonElement, statusButton, taskElement)
+function styleElements(updateButtonElement, deleteButtonElement, statusButton, taskElement,deleteImageElement,updateImageElement)
 {
  // Styling Task cards 
  taskElement.style.display = "flex";
  taskElement.style.alignItems = "center";
  taskElement.style.justifyContent = "space-around";
  taskElement.style.borderRadius = "10px";
- taskElement.style.width = "99%";
+ taskElement.style.width = "90%";
  taskElement.style.height = "20%";
- taskElement.style.marginBottom = "5%";
+ taskElement.style.margin = "5%";
  taskElement.style.backgroundColor = "white";
 
+
  // Styling Buttons
- updateButtonElement.style.width = "15%";
- updateButtonElement.style.height = "40%";
+ updateButtonElement.style.width = "8%";
+ updateButtonElement.style.height = "60%";
  updateButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
  updateButtonElement.style.border = "none";
  updateButtonElement.style.borderRadius = "10px";
@@ -70,8 +82,8 @@ function styleElements(updateButtonElement, deleteButtonElement, statusButton, t
  updateButtonElement.style.cursor = "pointer";
 
 
- deleteButtonElement.style.width = "15%";
- deleteButtonElement.style.height = "40%";
+ deleteButtonElement.style.width = "8%";
+ deleteButtonElement.style.height = "60%";
  deleteButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
  deleteButtonElement.style.border = "none";
  deleteButtonElement.style.borderRadius = "10px";
@@ -80,10 +92,19 @@ function styleElements(updateButtonElement, deleteButtonElement, statusButton, t
 
  
  // Styling Status Button 
- statusButton.style.width = "15%";
+ statusButton.style.width = "25%";
  statusButton.style.height = "40%";
- statusButton.style.backgroundColor = "yellow";
+ statusButton.style.backgroundColor = "#F8ED62";
+ statusButton.style.border = "none";
+ statusButton.style.borderRadius = "10px";
 
+ // Styling delete img
+ deleteImageElement.style.height = "50%";
+ deleteImageElement.style.width = "50%";
+
+ // Styling delete img
+ updateImageElement.style.height = "50%";
+ updateImageElement.style.width = "50%";
 
 }
 
@@ -92,8 +113,6 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
      titleElement.textContent = value.Title;
      dateElement.textContent = value.Date;
      timeElement.textContent = value.Time;
-     deleteButtonElement.textContent = "Delete";
-     updateButtonElement.textContent = "Update";
 
      let targetValue = JSON.stringify(value);
      let allKeys = Object.keys(localStorage);
@@ -114,12 +133,14 @@ function fetchTaskCompletionStatus(allKeys,targetValue,value,statusButton)
             if(value.status === true)
             {
                 statusButton.textContent = "Done";
-                statusButton.style.backgroundColor = "green";
+                statusButton.style.backgroundColor = "#3F704D";
+                statusButton.style.color = "white";
             }
             else
             {
                 statusButton.textContent = "Pending";
-                statusButton.style.backgroundColor = "yellow";
+                statusButton.style.backgroundColor = "#F8ED62";
+                statusButton.style.color = "black";
             }
         }
      })
@@ -150,7 +171,8 @@ function updateTaskCompletionStatus(allKeys,targetValue,value,statusButton)
                 if(statusButton.textContent === "Pending")
                 {
                     statusButton.textContent = "Done";
-                    statusButton.style.backgroundColor = "green";
+                    statusButton.style.backgroundColor = "#3F704D";
+                    statusButton.style.color = "white";
                     value.status = true;
                     let updatedWithStatus = JSON.stringify(value);
                     localStorage.setItem(key,updatedWithStatus);
@@ -158,7 +180,8 @@ function updateTaskCompletionStatus(allKeys,targetValue,value,statusButton)
                 else
                 {
                     statusButton.textContent = "Pending";
-                    statusButton.style.backgroundColor = "yellow";
+                    statusButton.style.backgroundColor = "#F8ED62";
+                    statusButton.style.color = "black";
                     value.status = false;
                     let updatedWithStatus = JSON.stringify(value);
                     localStorage.setItem(key,updatedWithStatus);
@@ -211,7 +234,7 @@ function attachUpdateTask(allKeys,targetValue,value,updateButtonElement,taskElem
                 }
 
 
-                let newTime = prompt("Enter new date for the task:", value.Time);
+                let newTime = prompt("Enter new time for the task:", value.Time);
                 if (newTime !== null) 
                 {
                     let timeElement = taskElement.querySelector("h6");
