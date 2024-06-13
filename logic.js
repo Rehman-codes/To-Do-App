@@ -99,7 +99,15 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
      let allKeys = Object.keys(localStorage);
 
 
-     allKeys.forEach(key =>{
+     fetchTaskCompletionStatus(allKeys);
+     attachDeleteTask(allKeys);
+     updateTaskCompletionStatus(allKeys);
+     attachUpdateTask(allKeys); 
+}
+
+function fetchTaskCompletionStatus(allKeys)
+{
+    allKeys.forEach(key =>{
 
         if(localStorage.getItem(key) === targetValue)
         {
@@ -115,10 +123,11 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
             }
         }
      })
+}
 
-
-     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Task >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-     allKeys.forEach(key =>{
+function attachDeleteTask(allKeys)
+{
+    allKeys.forEach(key =>{
 
         if(localStorage.getItem(key) === targetValue)
         {
@@ -128,10 +137,11 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
            };
         }
      })
+}
 
-
-     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Update Task Status >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-     allKeys.forEach(key =>{
+function updateTaskCompletionStatus(allKeys)
+{
+    allKeys.forEach(key =>{
 
         if(localStorage.getItem(key) === targetValue)
         {
@@ -156,10 +166,11 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
            };
         }
      })
+}
 
-
-     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Update Task  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-     allKeys.forEach(key =>{
+function attachUpdateTask(allKeys)
+{
+    allKeys.forEach(key =>{
 
         if(localStorage.getItem(key) === targetValue)
         {
@@ -219,9 +230,6 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
            };
         }
      })
-
-
-    
 }
 
 function insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton)
