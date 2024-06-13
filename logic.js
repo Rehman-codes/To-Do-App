@@ -99,13 +99,13 @@ function addContent(titleElement,dateElement,timeElement,deleteButtonElement,upd
      let allKeys = Object.keys(localStorage);
 
 
-     fetchTaskCompletionStatus(allKeys);
-     attachDeleteTask(allKeys);
-     updateTaskCompletionStatus(allKeys);
-     attachUpdateTask(allKeys); 
+     fetchTaskCompletionStatus(allKeys,targetValue,value,statusButton);
+     attachDeleteTask(allKeys,targetValue,deleteButtonElement,taskElement);
+     updateTaskCompletionStatus(allKeys,targetValue,value,statusButton);
+     attachUpdateTask(allKeys,targetValue,value,updateButtonElement,taskElement); 
 }
 
-function fetchTaskCompletionStatus(allKeys)
+function fetchTaskCompletionStatus(allKeys,targetValue,value,statusButton)
 {
     allKeys.forEach(key =>{
 
@@ -125,7 +125,7 @@ function fetchTaskCompletionStatus(allKeys)
      })
 }
 
-function attachDeleteTask(allKeys)
+function attachDeleteTask(allKeys,targetValue,deleteButtonElement,taskElement)
 {
     allKeys.forEach(key =>{
 
@@ -139,7 +139,7 @@ function attachDeleteTask(allKeys)
      })
 }
 
-function updateTaskCompletionStatus(allKeys)
+function updateTaskCompletionStatus(allKeys,targetValue,value,statusButton)
 {
     allKeys.forEach(key =>{
 
@@ -168,7 +168,7 @@ function updateTaskCompletionStatus(allKeys)
      })
 }
 
-function attachUpdateTask(allKeys)
+function attachUpdateTask(allKeys,targetValue,value,updateButtonElement,taskElement)
 {
     allKeys.forEach(key =>{
 
