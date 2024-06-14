@@ -1,6 +1,31 @@
 let taskCount = 0;
 let hasDisplayed = false;
 
+function addMediaQueryStyles() 
+{
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @media (max-width: 600px) {
+
+            #Update-Button 
+            {
+                width: 12% !important;
+                height: 90% !important;
+            }
+
+            #Delete-Button 
+            {
+             width: 12% !important;
+             height: 90% !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+ // Call the function to add the media query styles once
+ addMediaQueryStyles();
+
 function viewTasks()
 {
   let keys = Object.keys(localStorage);
@@ -35,6 +60,9 @@ function createElements(value)
 {
  //  Elements to be added 
  let taskElement = document.createElement("div");
+ let taskElementChild1 = document.createElement("div");
+ let taskElementChild2 = document.createElement("div");
+
  let titleElement = document.createElement("h4");
  let dateElement = document.createElement("h5");
  let timeElement = document.createElement("h6");
@@ -53,42 +81,61 @@ function createElements(value)
 
  let statusButton = document.createElement("button");
 
- styleElements(updateButtonElement,deleteButtonElement,statusButton,taskElement,deleteImageElement,updateImageElement);
+ styleElements(updateButtonElement,deleteButtonElement,statusButton,taskElement,deleteImageElement,updateImageElement,taskElementChild1,taskElementChild2);
  addContent(titleElement,dateElement,timeElement,deleteButtonElement,updateButtonElement,taskElement,value,statusButton);
- insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton);
+ insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton,taskElementChild1,taskElementChild2);
 
 }
 
-function styleElements(updateButtonElement, deleteButtonElement, statusButton, taskElement,deleteImageElement,updateImageElement)
+function styleElements(updateButtonElement, deleteButtonElement, statusButton, taskElement,deleteImageElement,updateImageElement,taskElementChild1,taskElementChild2)
 {
  // Styling Task cards 
  taskElement.style.display = "flex";
  taskElement.style.alignItems = "center";
- taskElement.style.justifyContent = "space-around";
+ taskElement.style.justifyContent = "center";
+ taskElement.style.flexDirection = "column";
  taskElement.style.borderRadius = "10px";
  taskElement.style.width = "90%";
- taskElement.style.height = "20%";
+ taskElement.style.height = "30%";
  taskElement.style.margin = "5%";
  taskElement.style.backgroundColor = "white";
 
+ // Styling Task Card Childs
+ taskElementChild1.style.display = "flex";
+ taskElementChild1.style.alignItems = "center";
+ taskElementChild1.style.justifyContent = "space-around";
+ taskElementChild1.style.flexDirection = "row";
+ taskElementChild1.style.width = "90%";
+ taskElementChild1.style.height = "60%";
+ taskElementChild1.style.borderRadius = "10px";
+
+ taskElementChild2.style.display = "flex";
+ taskElementChild2.style.alignItems = "center";
+ taskElementChild2.style.justifyContent = "space-evenly";
+ taskElementChild2.style.flexDirection = "row";
+ taskElementChild2.style.width = "90%";
+ taskElementChild2.style.height = "35%";
+ taskElementChild2.style.borderRadius = "10px";
 
  // Styling Buttons
  updateButtonElement.style.width = "8%";
- updateButtonElement.style.height = "60%";
+ updateButtonElement.style.height = "90%";
  updateButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
  updateButtonElement.style.border = "none";
  updateButtonElement.style.borderRadius = "10px";
  updateButtonElement.style.color = "white";
  updateButtonElement.style.cursor = "pointer";
+ updateButtonElement.setAttribute('id', 'Update-Button');
 
 
  deleteButtonElement.style.width = "8%";
- deleteButtonElement.style.height = "60%";
+ deleteButtonElement.style.height = "90%";
  deleteButtonElement.style.backgroundColor = "rgb(66, 66, 66)";
  deleteButtonElement.style.border = "none";
  deleteButtonElement.style.borderRadius = "10px";
  deleteButtonElement.style.color = "white";
  deleteButtonElement.style.cursor = "pointer";
+ deleteButtonElement.setAttribute('id', 'Delete-Button');
 
  
  // Styling Status Button 
@@ -255,19 +302,23 @@ function attachUpdateTask(allKeys,targetValue,value,updateButtonElement,taskElem
      })
 }
 
-function insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton)
+function insertElements(taskElement,titleElement,dateElement,timeElement,updateButtonElement,deleteButtonElement,statusButton,taskElementChild1,taskElementChild2)
 {
     let parentElement = document.getElementById('all-tasks');
     parentElement.style.overflowY = "scroll";
     parentElement.appendChild(taskElement);
 
     // Inserting Elements in Task Card
-    taskElement.appendChild(statusButton)
-    taskElement.appendChild(titleElement)
-    taskElement.appendChild(dateElement)
-    taskElement.appendChild(timeElement)
-    taskElement.appendChild(updateButtonElement)
-    taskElement.appendChild(deleteButtonElement)
+    taskElement.appendChild(taskElementChild1)
+    taskElement.appendChild(taskElementChild2)
+
+    taskElementChild1.appendChild(statusButton);
+    taskElementChild1.appendChild(titleElement);
+    taskElementChild1.appendChild(dateElement);
+    taskElementChild1.appendChild(timeElement);
+
+    taskElementChild2.appendChild(updateButtonElement)
+    taskElementChild2.appendChild(deleteButtonElement)
 }
 
 function toggleView(e)
